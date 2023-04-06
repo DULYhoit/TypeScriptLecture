@@ -237,7 +237,7 @@ testrest(1,2,4,5,6,7,2);
 // && 오른쪽은 a가 string일경우 (삼항연산자 느낌)
 function testnar(a : string | undefined) {
     if(a && typeof a === 'string'){
-
+      
     }
 }
 //narrowing 해야하는 데이터가 오브젝트 속성일경우
@@ -248,4 +248,123 @@ function testani(animal : Fish | Bird) {
    if('swim' in animal){
         animal.swim
    }
+}
+
+//return type : never
+//조건1. return 이 없어야함
+//조건2. endpoint 가 없어야함
+//잘쓰지않음 void로 대체
+function testnever(a : string):never {
+  throw new Error;
+}
+
+//객체지향언어 문법 지원
+//public, private , protected, static
+
+class User {
+  name : string;
+  private familyName : string = 'kim'; 
+  constructor(a) {
+    this.name = a + this.familyName;
+  }
+  setFamilyName(a){
+    this.familyName = a;
+  }
+}
+//private 변수는 class 안쪽에서만 수정이 가능하다
+//수정하고싶으면 class 안쪽에서 함수를따로만들어야함 Java의 getter,setter
+let 유저1 = new User('park');
+유저1.setFamilyName('jisung');
+
+//contructor 축약문법 매개변수로 public 타입을 같이써주면 this를 안써도됨
+
+class User2 {
+  constructor(public name : string){
+
+  }
+}
+//protected : 상속받은 자식이면 수정가능
+//extends : class 복사
+class User3 {
+ protected x = 10;
+}
+
+class CopyUser3 extends User3 {
+  doThis(){
+    this.x = 20;
+  }
+}
+
+//static 자식에게 물려주지않음
+
+class User4 {
+ static x = 10;
+  y = 20;
+}
+let children = new User4();
+//children.x <-사용불가능
+//User4.x <-사용가능
+
+//활용예시
+class User5 {
+ static skill = 'js';
+  intro = User5.skill + '전문가입니다.';
+}
+
+let kim = new User5();
+console.log(kim);
+
+User5.skill = 'Java';
+
+let kim2 = new User5();
+console.log(kim);
+
+//Gemeric 제네릭파라미터
+
+function testGeneric<MyType extends number>(x : MyType[]) :MyType {
+  return x[0];
+}
+
+let g = testGeneric<number>([4,2])
+
+console.log(g + 1);
+
+//d.ts파일
+//1.확장자명을 d.ts를 만들고 타입정의 보관용 파일로 쓰면된다
+//2.export import 문법으로 사용가능
+//추가팁:레퍼런스용으로 쓰고싶으면 tsconfig.json 에 "declaration":true 설정하면 자동으로 생성됨
+//d.ts파일 글로벌 모듈로 만드는법:tsconfig.json 에 "typeRoots":["위치"]
+//로컬: import하려면 export문법써야함 , 글로벌 : 만들어둔 변수들을 그냥 사용함
+//외부 라이브러리 사용할때 ex)Jquery $()<-타입지정을 해줘야함(https://www.typescriptlang.org/) 가서 d.ts다운받으면됨, npm설치할때 자동으로 깔리는경우가 있음
+
+//implements 키워드 현재 class함수가 정확하게 해당 type을 가지고있는지 확인할때
+
+// interface CarType {
+//   model : string,
+//   price : number
+// }
+
+//interface에 있는 타입이 class에 없으면 에러
+
+// class Car implements CarType {
+//   model : string;
+//   price : number = 1000;
+//   constructor(a :string){
+//     this.model = a
+//   }
+// }
+// let 붕붕이 = new Car('morning');
+
+//index signature : object 타입에 한번만 적용가능
+
+interface StringOnly{
+  //모든 string 속성
+  [key : string] :string,
+}
+
+let teststring : StringOnly= {
+  name : 'kim',
+  age : '20',
+  location : 'seoul'
+
 }

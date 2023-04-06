@@ -173,3 +173,72 @@ function testani(animal) {
         animal.swim;
     }
 }
+//return type : never
+//조건1. return 이 없어야함
+//조건2. endpoint 가 없어야함
+//잘쓰지않음 void로 대체
+function testnever(a) {
+    throw new Error;
+}
+//객체지향언어 문법 지원
+//public, private , protected, static
+class User {
+    name;
+    familyName = 'kim';
+    constructor(a) {
+        this.name = a + this.familyName;
+    }
+    setFamilyName(a) {
+        this.familyName = a;
+    }
+}
+//private 변수는 class 안쪽에서만 수정이 가능하다
+//수정하고싶으면 class 안쪽에서 함수를따로만들어야함 Java의 getter,setter
+let 유저1 = new User('park');
+유저1.setFamilyName('jisung');
+//contructor 축약문법 매개변수로 public 타입을 같이써주면 this를 안써도됨
+class User2 {
+    name;
+    constructor(name) {
+        this.name = name;
+    }
+}
+//protected : 상속받은 자식이면 수정가능
+//extends : class 복사
+class User3 {
+    x = 10;
+}
+class CopyUser3 extends User3 {
+    doThis() {
+        this.x = 20;
+    }
+}
+//static 자식에게 물려주지않음
+class User4 {
+    static x = 10;
+    y = 20;
+}
+let children = new User4();
+//children.x <-사용불가능
+//User4.x <-사용가능
+//활용예시
+class User5 {
+    static skill = 'js';
+    intro = User5.skill + '전문가입니다.';
+}
+let kim = new User5();
+console.log(kim);
+User5.skill = 'Java';
+let kim2 = new User5();
+console.log(kim);
+//Gemeric 제네릭파라미터
+function testGeneric(x) {
+    return x[0];
+}
+let g = testGeneric([4, 2]);
+console.log(g + 1);
+let teststring = {
+    name: 'kim',
+    age: '20',
+    location: 'seoul'
+};
