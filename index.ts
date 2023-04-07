@@ -358,7 +358,7 @@ console.log(g + 1);
 //index signature : object 타입에 한번만 적용가능
 
 interface StringOnly{
-  //모든 string 속성
+  // 모든 속성과 값의 type을 한번에 지정하고싶은 경우
   [key : string] :string,
 }
 

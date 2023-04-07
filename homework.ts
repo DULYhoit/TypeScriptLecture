@@ -161,4 +161,4 @@ class Person<Mytype extends number |string| string[]> {
   }
 }
 let a = new Person('어쩌구');
-a.name //any 타입이 되었넹 
+a.name //any 타입
